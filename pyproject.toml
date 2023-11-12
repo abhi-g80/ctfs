@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "ctfs"
+version = "0.1.0"
+description = "Collection of ctf solutions"
+authors = ["Abhishek Guha <abhi.workspace@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.31.0"
+scapy = "^2.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
