@@ -1,4 +1,6 @@
 tmp/
 .ipynb_checkpoints
 .python-version
-Untitled.ipynb
+Untitled*
+output
+privatekey*
