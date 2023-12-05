@@ -67,6 +67,7 @@ def main(url: str) -> str:
 
     if not cookie_value_decoded:
         print("Could not decode cookie, exiting")
+        return DEFAULT_FLAG
 
     return get_flag_from_decoded_cookie(cookie_value_decoded)
 
