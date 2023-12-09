@@ -12,6 +12,7 @@ scapy = "^2.5.0"
 pyopenssl = "^23.3.0"
 pycryptodome = "^3.19.0"
 matplotlib = "^3.8.2"
+pyjwt = "^2.8.0"
 
 
 [tool.poetry.group.dev.dependencies]
