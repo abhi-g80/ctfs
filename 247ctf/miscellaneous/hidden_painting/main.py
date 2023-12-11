@@ -25,7 +25,6 @@ def parser() -> argparse.Namespace:
 
 
 def run(secrets_file: io.TextIOWrapper, save_file: str) -> None:
-    print(f"{type(secrets_file)}")
     contents = [c.strip("\n").split() for c in secrets_file.readlines()]
     coordinates = [(int(c[0], 0), int(c[1], 0)) for c in contents]
     print(f"total coordinates: {len(coordinates)}")
