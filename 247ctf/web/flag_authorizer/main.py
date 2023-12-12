@@ -10,7 +10,6 @@ Run as follows:
 """
 import argparse
 import json
-import base64
 
 from html.parser import HTMLParser
 
@@ -23,7 +22,7 @@ COOKIE_NAME = "access_token_cookie"
 
 
 class HTMLFlagParser(HTMLParser):
-    def handle_data(self, data: str) -> str:
+    def handle_data(self, data: str) -> None:
         if "247CTF" in data:
             print(f"flag: {data}")
 
@@ -49,7 +48,7 @@ def parser() -> argparse.Namespace:
     return args
 
 
-def query(url: str, cookies: dict = None) -> requests.models.Response:
+def query(url: str, cookies: dict = {}) -> requests.models.Response:
     response = requests.get(url, cookies=cookies)
     response.raise_for_status()
     return response
@@ -60,7 +59,7 @@ def get_cookie(url: str, cookie_name: str) -> str:
     return response.cookies.get(cookie_name)
 
 
-def print_flag(url: str, cookies: dict) -> str:
+def print_flag(url: str, cookies: dict) -> None:
     response = query(url, cookies=cookies)
     parser = HTMLFlagParser()
     parser.feed(response.text)
@@ -70,7 +69,7 @@ def encode_jwt(payload: dict, key: str, algorithm: str = "HS256"):
     return jwt.encode(payload, key, algorithm)
 
 
-def decode_jwt(token: str, key: str, algorithms: str = "HS256", leeway: float = 100.0):
+def decode_jwt(token: str, key: str, algorithms: list[str] = ["HS256"], leeway: float = 100.0) -> dict:
     return jwt.decode(token, key, algorithms=algorithms, leeway=leeway)
 
 
