@@ -1,4 +1,7 @@
-// Run with go run twig_injector.go
+// Run as,
+//
+// go run twig_injector.go -url <url>
+
 package main
 
 import (
