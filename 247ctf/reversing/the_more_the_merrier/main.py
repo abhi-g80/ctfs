@@ -23,7 +23,7 @@ def solve(filename: str) -> None:
     ans = ""
     flag = False
     for idx in range(len(content)):
-        if content[idx] == 0:
+        if content[idx] == 0:  # ignore nulls
             continue
         w.append(content[idx])
         if flag:
@@ -33,10 +33,28 @@ def solve(filename: str) -> None:
                 break
         while len(w) > window:
             w.popleft()
-        if len(w) == 6:
+        if len(w) == window:
             s = "".join([chr(i) for i in w])
             if s == FLAG_HEADER:
                 flag = True
+
+
+def solve_with_bytes(filename: str) -> None:
+    with open(filename, mode="rb") as f:
+        content = f.read()
+
+    filtered = bytes(b for b in content if b != 0)
+    header = FLAG_HEADER.encode()
+    header_idx = filtered.find(header)
+    if header_idx == -1:
+        print("Flag not found")
+        return
+    start = header_idx - len(header)
+    end = filtered.find(b"}", start)
+    if end == -1:
+        print(f"Flag is malformed, start: {start}")
+    flag = filtered[start : end + 1].decode(errors="ignore")
+    print("Flag: ", flag)
 
 
 def parser() -> argparse.Namespace:
@@ -51,3 +69,4 @@ def parser() -> argparse.Namespace:
 if __name__ == "__main__":
     args = parser()
     solve(args.binary)
+    solve_with_bytes(args.binary)
