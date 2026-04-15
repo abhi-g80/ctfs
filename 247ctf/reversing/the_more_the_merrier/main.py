@@ -53,6 +53,7 @@ def solve_with_bytes(filename: str) -> None:
     end = filtered.find(b"}", start)
     if end == -1:
         print(f"Flag is malformed, start: {start}")
+        return
     flag = filtered[start : end + 1].decode(errors="ignore")
     print("Flag: ", flag)
 
